@@ -11,16 +11,22 @@ To find SQLi, look for input fields, URL parameters, headers, or cookies that in
 1.Triggering an Error: Inject special characters into parameters to break the syntax:
 
 A. '
+
 B. "
+
 c. `
-D.')
-E.")
-F.;
+
+D. ')
+
+E. ")
+
+F. ;
 
 
 2.Boolean Tests: Inject logical operators to verify if the application responds differently:
 
 A. ' OR 1=1 -- -
+
 B. ' OR 1=2 -- -
 
 
