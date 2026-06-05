@@ -15,10 +15,15 @@ To find SQLi, look for input fields, URL parameters, headers, or cookies that in
 Inject special characters into parameters to break the database query syntax:
 
 A. '
+
 B. "
+
 C. `
+
 D. ')
+
 E. ")
+
 D. ;
 
 # 2. Boolean Tests
