@@ -45,31 +45,31 @@ nmap -p- <target_ip>
 
 These commands are categorized by operational impact and behavior. Choose carefully based on the assessment's rules of engagement (RoE).
 
-## 🔵 Safe Scans
+### 🔵 Safe Scans
 
 These commands will not crash services or negatively impact target hosts.
 
-1.Simple ping scan - just checks if host is up
+#### 1.Simple ping scan - just checks if host is up
 
 nmap -sn 192.168.1.1
 
-2.Ping scan entire subnet
+#### 2.Ping scan entire subnet
 
 nmap -sn 192.168.1.0/24
 
-3.DNS resolution only (no port scan)
+#### 3.DNS resolution only (no port scan)
 
 nmap -sL 192.168.1.0/24
 
-4.SYN scan on common ports (read-only, no connection completed)
+#### 4.SYN scan on common ports (read-only, no connection completed)
 
 nmap -sS 192.168.1.1
 
-5.Scan with no ping (assume host is up)
+#### 5.Scan with no ping (assume host is up)
 
 nmap -Pn 192.168.1.1
 
-6.Only show open ports quietly
+#### 6.Only show open ports quietly
 
 nmap --open 192.168.1.1
 
@@ -78,11 +78,11 @@ nmap --open 192.168.1.1
 
 These commands are louder on the network, complete active connections, or gather extensive service details, potentially raising security alerts.
 
-1.Full TCP connect scan (completes 3-way handshake)
+#### 1.Full TCP connect scan (completes 3-way handshake)
 
 nmap -sT 192.168.1.1
 
-2.Aggressive scan (OS detect + version + scripts + traceroute)
+#### 2.Aggressive scan (OS detect + version + scripts + traceroute)
 
 nmap -A 192.168.1.1
 
